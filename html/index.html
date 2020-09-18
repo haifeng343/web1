@@ -27,14 +27,14 @@
 					<div class="bottom">
 						<img src="../img/us.png" class="us">
 						<p class="dec">上海懿贝瑞生物医药科技有限公司（简称：懿贝瑞生物，BioSCI Res）由前身于2009年创办的上海浩朗生物科技有限公司等几家公司重组而成；
-公司定位为一家以精准医疗和个性化治疗为主线的生物科技公司；
-我公司是从事医院合作科研CRO服务、生物（肿瘤）样本库建设、TILs浸润淋巴细胞治疗研究的生物技术公司；
-懿贝瑞生物以“产、学、研”一体化的创新发展模式引领精准医疗的发展，通过科研创新思维为肿瘤患者做个性化治疗做出贡献。</p>
+							公司定位为一家以精准医疗和个性化治疗为主线的生物科技公司；
+							我公司是从事医院合作科研CRO服务、生物（肿瘤）样本库建设、TILs浸润淋巴细胞治疗研究的生物技术公司；
+							懿贝瑞生物以“产、学、研”一体化的创新发展模式引领精准医疗的发展，通过科研创新思维为肿瘤患者做个性化治疗做出贡献。</p>
 					</div>
 					<div class="navIndex">
 						<span v-for="(item,index) in sites" :key="index" :class="['navLi',showId==index?'active':'']" @click="set(index)">{{item.name}}</span>
 					</div>
-					<div class="progress">
+					<div class="progress" id="prog">
 						<div class="number"></div>
 					</div>
 				</div>
@@ -66,32 +66,32 @@
 				},
 				methods: {
 					set(e) {
-						$('.number').animate({
+						$('#prog .number').stop().remove();
+						clearTimeout(this.timer);
+						$('#prog').append('<div class="number"></div>');
+						$('.number').css({
 							width: 0
 						}, 0);
 						let that = this;
+						that.showId = e;
 						$('.number').animate({
 							width: 230
 						}, 5000);
-						setTimeout(function() {
-							that.showId = e;
+						this.timer = setTimeout(function() {
+							that.setTime(e);
 						}, 5000)
 					},
-					setTime() {
-						let i = 0;
-						let that = this;
-						setInterval(function() {
-							i++;
-							if (i == 4) {
-								i = 0
-							}
-							that.set(i)
-						}, 5000);
+					setTime(e) {
+						e++;
+						if (e == 4) {
+							e = 0
+						}
+						this.set(e)
 
 					},
 				},
 				mounted() {
-					this.setTime();
+					this.set(0);
 				}
 			})
 		</script>
