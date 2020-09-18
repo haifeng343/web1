@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/main.css" />
+		<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.js"></script>
+		<script src="../js/base.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="container-fluid" id="app">
+			<div class="row">
+				<div class="banner">
+					<img src="../img/logo.png" class="logo">
+					<div class="tabbar">
+						<a href="javascript:;" class="active">首页</a>
+						<a href="javascript:;">技术服务</a>
+						<a href="javascript:;">免疫细胞治疗研发</a>
+						<a href="javascript:;">在研项目</a>
+						<a href="javascript:;">关于懿贝瑞</a>
+					</div>
+					<div class="top">
+						<img v-for="(item,index) in imgs" :class="['img',showId==index?'img1':'']" :key="index" :src="item" />
+					</div>
+					<div class="bottom">
+						<img src="../img/us.png" class="us">
+						<p class="dec">上海懿贝瑞生物医药科技有限公司（简称：懿贝瑞生物，BioSCI Res）由前身于2009年创办的上海浩朗生物科技有限公司等几家公司重组而成；
+公司定位为一家以精准医疗和个性化治疗为主线的生物科技公司；
+我公司是从事医院合作科研CRO服务、生物（肿瘤）样本库建设、TILs浸润淋巴细胞治疗研究的生物技术公司；
+懿贝瑞生物以“产、学、研”一体化的创新发展模式引领精准医疗的发展，通过科研创新思维为肿瘤患者做个性化治疗做出贡献。</p>
+					</div>
+					<div class="navIndex">
+						<span v-for="(item,index) in sites" :key="index" :class="['navLi',showId==index?'active':'']" @click="set(index)">{{item.name}}</span>
+					</div>
+					<div class="progress">
+						<div class="number"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			new Vue({
+				el: '#app',
+				data: {
+					showId: 0,
+					sites: [{
+							name: '愿景'
+						},
+						{
+							name: '使命'
+						},
+						{
+							name: '价值观'
+						}, {
+							name: '追求'
+						}
+					],
+					imgs: [
+						'../img/banner1.png',
+						'../img/banner2.png',
+						'../img/banner3.png',
+						'../img/banner4.png'
+					]
+				},
+				methods: {
+					set(e) {
+						$('.number').animate({
+							width: 0
+						}, 0);
+						let that = this;
+						$('.number').animate({
+							width: 230
+						}, 5000);
+						setTimeout(function() {
+							that.showId = e;
+						}, 5000)
+					},
+					setTime() {
+						let i = 0;
+						let that = this;
+						setInterval(function() {
+							i++;
+							if (i == 4) {
+								i = 0
+							}
+							that.set(i)
+						}, 5000);
+
+					},
+				},
+				mounted() {
+					this.setTime();
+				}
+			})
+		</script>
+	</body>
+</html>
